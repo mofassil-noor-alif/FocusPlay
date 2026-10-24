@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>FocusPlay</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap');
+    
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      width: 340px;
+      margin: 0;
+      padding: 20px;
+      background: linear-gradient(135deg, #0f172a 0%, #1e1b4b 100%);
+      color: #e2e8f0;
+    }
+    .header {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 20px;
+    }
+    .icon {
+      width: 28px;
+      height: 28px;
+      background: linear-gradient(135deg, #3b82f6 0%, #8b5cf6 100%);
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 4px 12px rgba(59, 130, 246, 0.4);
+    }
+    .icon svg {
+      width: 16px;
+      height: 16px;
+      fill: none;
+      stroke: white;
+      stroke-width: 2.5;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+    }
+    h3 {
+      margin: 0;
+      font-size: 16px;
+      font-weight: 600;
+      color: #ffffff;
+      letter-spacing: 0.5px;
+    }
+    
+    /* Toggle Switch CSS */
+    .settings-group {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      margin-bottom: 20px;
+      background: rgba(0, 0, 0, 0.2);
+      padding: 12px 14px;
+      border-radius: 10px;
+      border: 1px solid rgba(255, 255, 255, 0.05);
+    }
+    .setting-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .setting-label {
+      font-size: 13px;
+      font-weight: 500;
+      color: #cbd5e1;
+    }
+    .switch {
+      position: relative;
+      display: inline-block;
+      width: 36px;
+      height: 20px;
+    }
+    .switch input {
+      opacity: 0;
+      width: 0;
+      height: 0;
+    }
+    .slider {
+      position: absolute;
+      cursor: pointer;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background-color: rgba(255, 255, 255, 0.1);
+      transition: .3s;
+      border-radius: 20px;
+      border: 1px solid rgba(255,255,255,0.1);
+    }
+    .slider:before {
+      position: absolute;
+      content: "";
+      height: 14px;
+      width: 14px;
+      left: 2px;
+      bottom: 2px;
+      background-color: #94a3b8;
+      transition: .3s;
+      border-radius: 50%;
+    }
+    input:checked + .slider {
+      background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);
+      border-color: transparent;
+    }
+    input:checked + .slider:before {
+      transform: translateX(16px);
+      background-color: white;
+    }
+    
+    .divider {
+      height: 1px;
+      background: rgba(255, 255, 255, 0.08);
+      margin: 0 0 16px 0;
+    }
+    
+    .input-group {
+      display: flex;
+      gap: 8px;
+      margin-bottom: 20px;
+      background: rgba(255, 255, 255, 0.05);
+      padding: 6px;
+      border-radius: 10px;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+    }
+    input[type="text"] {
+      flex: 1;
+      padding: 8px 12px;
+      background: rgba(0, 0, 0, 0.2);
+      border: 1px solid rgba(255, 255, 255, 0.05);
+      border-radius: 6px;
+      color: #fff;
+      font-size: 13px;
+      outline: none;
+      transition: all 0.2s ease;
+    }
+    input[type="text"]:focus {
+      border-color: rgba(59, 130, 246, 0.5);
+      background: rgba(0, 0, 0, 0.3);
+    }
+    input[type="text"]::placeholder {
+      color: #64748b;
+    }
+    button#addBtn {
+      padding: 0 16px;
+      background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);
+      color: white;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      font-size: 13px;
+      font-weight: 500;
+      transition: all 0.2s ease;
+      box-shadow: 0 2px 8px rgba(37, 99, 235, 0.3);
+    }
+    button#addBtn:hover {
+      background: linear-gradient(135deg, #60a5fa 0%, #3b82f6 100%);
+      transform: translateY(-1px);
+      box-shadow: 0 4px 12px rgba(37, 99, 235, 0.4);
+    }
+    button#addBtn:active {
+      transform: translateY(0);
+    }
+    ul {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+    li {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 10px 14px;
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 8px;
+      font-size: 14px;
+      transition: all 0.2s ease;
+    }
+    li:hover {
+      background: rgba(255, 255, 255, 0.06);
+      border-color: rgba(255, 255, 255, 0.12);
+    }
+    .domain-name {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .domain-name::before {
+      content: '';
+      display: block;
+      width: 6px;
+      height: 6px;
+      background: #10b981;
+      border-radius: 50%;
+      box-shadow: 0 0 8px rgba(16, 185, 129, 0.5);
+    }
+    .remove-btn {
+      background: rgba(239, 68, 68, 0.1);
+      color: #fca5a5;
+      border: 1px solid rgba(239, 68, 68, 0.2);
+      padding: 6px 8px;
+      border-radius: 6px;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .remove-btn:hover {
+      background: rgba(239, 68, 68, 0.2);
+      color: #f87171;
+      border-color: rgba(239, 68, 68, 0.3);
+    }
+    .remove-btn:active {
+      transform: scale(0.95);
+    }
+    .empty-state {
+      text-align: center;
+      padding: 30px 0;
+      color: #64748b;
+      font-size: 13px;
+      background: rgba(0,0,0,0.2);
+      border-radius: 8px;
+      border: 1px dashed rgba(255,255,255,0.1);
+    }
+  </style>
+</head>
+<body>
+  <div class="header">
+    <div class="icon">
+      <svg viewBox="0 0 24 24"><path d="M5 3l14 9-14 9V3z" fill="white" stroke="none"/></svg>
+    </div>
+    <h3>FocusPlay</h3>
+  </div>
+  
+  <div class="settings-group">
+    <div class="setting-row">
+      <span class="setting-label">Master Power</span>
+      <label class="switch">
+        <input type="checkbox" id="masterPower" checked>
+        <span class="slider"></span>
+      </label>
+    </div>
+  </div>
+  
+  <div class="divider"></div>
+  
+  <div class="input-group">
+    <input type="text" id="domainInput" placeholder="Add website e.g. sflix.fi" autocomplete="off" spellcheck="false" />
+    <button id="addBtn">Add</button>
+  </div>
+  
+  <ul id="domainList"></ul>
+  <script src="popup.js"></script>
+</body>
+</html>
